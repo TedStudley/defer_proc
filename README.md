@@ -22,7 +22,42 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem can be used to defer execution of some blocks until certain conditions are met.
+
+The `Defer` class takes a block on initialization to run at a later time. The `Defer.until` and `Defer.while` methods are used to specify the conditions for later execution:
+
+```ruby
+  2.2.1 :001 > require 'defer'
+   => true
+  2.2.1 :002 > trigger = false
+   => false
+  2.2.1 :003 > Defer.new { puts "Hello, World!" }.until { trigger }
+   => #<Thread:0xa3c8e58@/path/to/lib/defer.rb:16 run>
+  2.2.1 :004 > trigger = true
+   => true
+  Hello, World
+```
+
+The method `Defer#until` defers execution *until* the block provided is true, and the method `Defer#while` defers execution *while* the block provided is true. The block provided to `Defer#until` or `Defer#while` runs in a separate thread, which polls the value of the conditional at specified intervals. By default, polling occurs every 1/10 of a second, although the interval can be specified when `Defer` is initialized:
+
+```ruby
+require 'defer'
+
+# Defer usage of class until it exists, polling every second
+Defer.new(1.0) { FutureClass.do_something }.until { defined?(FutureClass) }
+
+class FutureClass
+  # Class definition
+end
+
+# FutureClass.do_something gets called
+```
+
+This gem was written for use in the [`dotfile`](https://github.com/tedstudley/dotfile.git) gem, to enable certain Rails features to be wrapped from inside the .irbrc or .pryrc ruby dotfiles.
+
+
+
+
 
 ## Development
 

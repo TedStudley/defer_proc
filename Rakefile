@@ -3,9 +3,11 @@ require 'rdoc/task'
 require 'rake/testtask'
 
 Rake::RDocTask.new do |rdoc|
-  rdoc.main = 'README.md'
+  rdoc.main      = 'README.md'
 
-  rdoc.markup = 'markdown'
+  if rdoc.respond_to? :markup=
+    rdoc.markup  = 'markdown'
+  end
   rdoc.generator = 'fivefish'
 
   rdoc.rdoc_files.include(rdoc.main, 'lib/**/*.rb')

@@ -1,3 +1,3 @@
-class Procrastinate
+class DeferProc
   VERSION = "0.1.0"
 end

@@ -1,6 +1,6 @@
-# Procrastinate
+# DeferProc
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/procrastinate`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/defer_proc`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
 
@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'procrastinate'
+gem 'defer_proc'
 ```
 
 And then execute:
@@ -18,33 +18,33 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install procrastinate
+    $ gem install defer_proc
 
 ## Usage
 
 This gem can be used to defer execution of some blocks until certain conditions are met.
 
-The `Procrastinate` class takes a block on initialization to run at a later time. The `Procrastinate#until` and `Procrastinate#while` methods are used to specify the conditions for later execution:
+The `DeferProc` class takes a block on initialization to run at a later time. The `DeferProc#until` and `DeferProc#while` methods are used to specify the conditions for later execution:
 
 ```ruby
-  2.2.1 :001 > require 'procrastinate'
+  2.2.1 :001 > require 'defer_proc'
    => true
   2.2.1 :002 > trigger = false
    => false
-  2.2.1 :003 > Procrastinate.new { puts "Hello, World!" }.until { trigger }
-   => #<Thread:0xa3c8e58@/path/to/lib/procrastinate.rb:16 run>
+  2.2.1 :003 > DeferProc.new { puts "Hello, World!" }.until { trigger }
+   => #<Thread:0xa3c8e58@/path/to/lib/defer_proc.rb:16 run>
   2.2.1 :004 > trigger = true
    => true
   Hello, World
 ```
 
-The method `Procrastinate#until` defers execution *until* the block provided is true, and the method `Procrastinate#while` defers execution *while* the block provided is true. The block provided to `Procrastinate#until` or `Procrastinate#while` runs in a separate thread, which polls the value of the conditional at specified intervals. By default, polling occurs every 1/10 of a second, although the interval can be specified when `Procrastinate` is initialized:
+The method `DeferProc#until` defers execution *until* the block provided is true, and the method `DeferProc#while` defers execution *while* the block provided is true. The block provided to `DeferProc#until` or `DeferProc#while` runs in a separate thread, which polls the value of the conditional at specified intervals. By default, polling occurs every 1/10 of a second, although the interval can be specified when `DeferProc` is initialized:
 
 ```ruby
-require 'procrastinate'
+require 'defer_proc'
 
 # Defer usage of class until it exists, polling every second
-Procrastinate.new(1.0) { FutureClass.do_something }.until { defined?(FutureClass) }
+DeferProc.new(1.0) { FutureClass.do_something }.until { defined?(FutureClass) }
 
 class FutureClass
   # Class definition
@@ -63,7 +63,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/TedStudley/procrastinate/fork )
+1. Fork it ( https://github.com/TedStudley/defer_proc/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

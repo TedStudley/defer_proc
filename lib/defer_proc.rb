@@ -1,12 +1,12 @@
-require "procrastinate/version"
+require "defer_proc/version"
 
 # Class to defer execution of a block
-class Procrastinate
+class DeferProc
 
   # Initialize with the block for deferred execution
   def initialize(interval=0.1, &block)
     # `Procrastinate` requires a block be passed to initialization
-    throw ArgumentError.new("Procrastinate must be initialized with a block") if block.nil?
+    throw ArgumentError.new("DeferProc must be initialized with a block") if block.nil?
     # Interval must be a positive number
     throw ArgumentError.new("Polling interval must be a number.") unless interval.is_a? Numeric
     throw ArgumentError.new("Polling interval must be positive.") unless interval > 0
@@ -17,17 +17,17 @@ class Procrastinate
 
   # Defer execution until the provided block is satisfied
   def until(&conditional)
-    # `Procrastinate#until` must be passed a conditional block
+    # `DeferProc#until` must be passed a conditional block
     throw ArgumentError.new("A conditional block is required") if conditional.nil?
 
-    # forward the (negated) block to `Procrastinate#while`
+    # forward the (negated) block to `DeferProc#while`
     conditional_proc = Proc.new { not conditional.call }
     self.while(&conditional_proc)
   end
 
   # Defer execution of the @deferred_block while the provided block is satisfied
   def while(&conditional)
-    # `Procrastinate#while` must be passed a conditional block
+    # `DeferProc#while` must be passed a conditional block
     throw ArgumentError.new("A conditional block is required") if conditional.nil?
 
     Thread.new {

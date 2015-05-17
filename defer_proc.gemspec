@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'procrastinate/version'
+require 'defer_proc/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "procrastinate"
-  spec.version       = Procrastinate::VERSION
+  spec.name          = "defer_proc"
+  spec.version       = DeferProc::VERSION
   spec.authors       = ["tedstudley"]
   spec.email         = ["tedstudley@gmail.com"]
 
   spec.summary       = %q{Defer execution of a block until certain requirements are met.}
-  spec.homepage      = "https://github.com/tedstudley/procrastinate.git"
+  spec.homepage      = "https://github.com/tedstudley/defer_proc.git"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
